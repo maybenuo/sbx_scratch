@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<title>Scratch作品秀-必行编程</title>
+	<link rel="shortcut icon" href="/img/icon.ico">
+	<meta name="description" content="Scratch、Python、C++教学，竞赛、等级考试。">
+	<meta name="keyword" content="Scratch,Python,C++,少儿编程,K12,必行编程,中小学生创客,STEAM,小学信息技术,机器人编程,图形化编程">
+
+	<link rel="stylesheet" type="text/css" href="/layui/css/layui.css">
+	<link type="text/css" rel="stylesheet" href="/css/main.css" />
+	<link rel="stylesheet" type="text/css" href="/css/scratch_play.css">
+</head>
+
+<body style="background-color: #F8F8F8">
+	<div style="background-color: #FFF;">
+		<div id="head_box">
+			<div style="width: 50px;">作者:</div>
+
+			<a href="/" title="返回首页">
+				<img id="head_avatar" src="/user/<%=project.authorid%>.png">
+			</a>
+			<div id="head_username"><%= project.author_nickname %></div>
+
+			<div id="head_menu">
+				<% if (project.state==2){%>
+					<a href="/scratch/edit#<%= project.id%>" target="_blank" style="margin: 0 12px;">项目改编</a></li>
+				<%}%>
+		
+				<a href="javascript:;" onclick="showTEXT(`<%= project.description %>`,'作品介绍')" style="margin: 0 12px;">作品介绍</a>
+
+				<% if (project.likeid){%>
+					<a href="javascript:;" onclick="like()" id="like" style="margin: 0 12px;">已赞(<%=project.like_count%>)</a>
+				<%} else {%>
+					<a href="javascript:;" onclick="like()" id="like" style="margin: 0 12px;">点赞(<%=project.like_count%>)</a>
+				<%}%>
+
+				<% if (project.favoid){%>
+					<a href="javascript:;" onclick="favo()" id="favo" style="margin: 0 12px;">已收藏(<%=project.favo_count%>)</a>
+				<%} else {%>
+					<a href="javascript:;" onclick="favo()" id="favo" style="margin: 0 12px;">收藏(<%=project.favo_count%>)</a>
+				<%}%>
+
+				<% if (is_admin){%>
+					<% if (project.recommented==1){%>
+					<a href="javascript:;" onclick="reco()" id="reco" style="margin: 0 12px;">已推荐</a>
+					<%} else {%>
+					<a href="javascript:;" onclick="reco()" id="reco" style="margin: 0 12px;">推荐</a>
+					<%}%>
+				<%}%>
+			</div>
+		</div>
+	</div>
+
+	<div class="layui-container" style="background-color: #FFF; margin: 20px auto;border-radius: 5px;">
+		<div class="layui-row" style="border-bottom: #F8F8F8 solid 1px;">
+			<div class="layui-col-md6 layuicol-sm8 layui-col-xs12 layui-col-md-offset3 layiu-col-sm-offset2">
+				<div class="layui-row">
+					<div class="project-title"><%= project.title %></div>
+				</div>
+
+				<div class="layui-row">
+					<div id="container_play" style="display: none;">
+						<div id="wrapper">
+							<button id="fullscreen-btn"></button>
+							<canvas id="stage"></canvas>
+							<div id="monitors"></div>
+							<div id="asking-box">
+								<label id="question" for="answer">Question</label>
+								<input type="text" id="answer">
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<span id="loading-progress" style="display: none;"></span>
+				<div id="container_main">
+					<div id="project_slt" style="background-image: url(/scratch_slt/<%=project.id%>);">
+						<div class="green-flag-box">
+							<img class="green-flag" src="/scratch/static/assets/2e0c4790f8f9cf28e3c346b9cef0fcb6.svg">
+							<div style="font-size: small; width: 88px;text-align: center;">点击运行</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="layui-row scratch-player-bottom">
+					<button id="greenFlag" class="layui-btn" onclick="greenFlag()" style="display: none;"> 开始
+					</button>
+					<button id="stopAll" class="layui-btn" onclick="stopAll()" style="display: none;"> 停止 </button>
+					<button class="layui-btn copylink share-iconbox">
+						分享给更多人(<%= project.view_count %>)
+						<div class="weixin-bar">
+							<div id="qrcode"></div>
+						</div>
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div style="display: flex;justify-content: center;background-color: #333;opacity: 0.8;">
+		<p style="font-size: smaller;line-height: 60px;color:#AAA">©2020. LLC. All rights reserved.必行编程</p>
+	</div>
+
+	<input type="hidden" id="works_id" value="<%= project.id %>">
+</body>
+
+<script type="text/javascript" src="/js/jquery.min.js"></script>
+<script type="text/javascript" src="/layui/layui.all.js"></script>
+<script type="text/javascript" src="/js/scratch.vm.min.js"></script>
+<script type="text/javascript" src="/js/qrcode.min.js"></script>
+<script type="text/javascript" src="/js/clipboard.min.js"></script>
+<script type="text/javascript" src="/js/main.js"></script>
+<script>
+	_pid = '<%= project.id %>';
+	like_count = parseInt('<%=project.like_count%>');
+	favo_count = parseInt('<%=project.favo_count%>');
+	isLogin =<%= login %>;
+</script>
+<script type="text/javascript" src="/js/scratch_play.js"></script>
+
+</html>

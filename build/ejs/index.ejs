@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<title>必行编程-普惠性少儿编程平台</title>
+	<link rel="shortcut icon" href="/img/icon.ico">
+	<meta name="description" content="Scratch、Python、C++教学，竞赛、等级考试。">
+	<meta name="keyword" content="Scratch,Python,C++,少儿编程,K12,必行编程,中小学生创客,STEAM,小学信息技术,机器人编程,图形化编程">
+	
+	<link rel="stylesheet" href="/layui/css/layui.css">
+	<link rel="stylesheet" href="/css/main.css">
+</head>
+
+<body>
+<div id="top_box">
+	<div id="top_bg"></div>
+	<div id="top_overlay"></div>
+
+	<div id='header-box'>
+		<% if (login ==false) { %>
+			<div>
+				<a href="https://www.comecode.net">
+					<img id="avatar_img" src="/img/logo.png">
+				</a>
+			</div>
+			<a href="https://www.comecode.net">
+				<h3 id="txt_username">必行编程---孩子们的编程平台</h3>
+			</a>
+			<div style="margin: 30px auto;">
+				<a href="/user/login" class="layui-btn layui-btn-danger">登录|注册</a>
+				<a href="/scratch/edit" class="layui-btn layui-btn-warm">开始创作</a>
+			</div>
+		<% } else { %>
+			<div>
+				<a href="/my/info">
+					<img id="avatar_img" src="/user/<%=userid%>.png" >
+				</a>
+			</div>
+			<h3 id="txt_username"><%=nickname%></h3>
+
+			<div style="margin: 30px auto;">
+				<% if (is_admin>0) { %>
+				<a href="/admin" class="layui-btn">系统平台</a>
+				<% } %>
+				<a href="/my/project" class="layui-btn layui-btn-danger">我的作品</a>
+				<a href="/scratch/edit" class="layui-btn layui-btn-warm">开始创作</a>
+			</div>
+		<% } %> 	
+	</div>
+</div>
+
+
+<div class="layui-container" style="margin:40px auto">
+	<div class="layui-row">
+		<div class="layui-col-md3 layui-col-md-offset1">
+			<h3 class="layui-form-mid">Scratch创意作品</h3>
+		</div>
+		<div class="layui-col-md2 layui-col-md-offset4">
+			<input class="layui-input" id='search_txt' type="text" placeholder="作品名称">
+		</div>
+		<div class="layui-col-md2">
+			<button type="button" onclick="Search()" class="layui-btn layui-btn-primary">搜 索</button>
+		</div>
+	</div>
+	
+	<div class="layui-row" style="margin-top: 20px;" id="box_projects">
+	</div>
+
+	<div style="display:flex; justify-content:center;">
+		<div id="layui_change_page"></div>
+	</div>
+</div>
+
+
+<div style="display: flex;justify-content: center;background-color: #333;opacity: 0.8;">
+	<div style="margin:10px auto;line-height: 24px;color:#888; text-align: center;">
+		<div>欢迎使用 scratch-cn.lite 开源平台</div>
+		<div>技术交流QQ群：115224892</div>
+		<a href="https://www.comecode.net" target="_blank" style="color:#F72">
+			<div>功能参考：www.comecode.net</div>
+		</a>
+		<a href="https://www.comecode.net/company/joinus" target="_blank" style="color:#F72">
+			<div>源代码有偿服务指南</div>
+		</a>
+		<div>©2020. LLC. All rights reserved.版权所有。开源版本仅用于学习交流，如需商用，请联系所有者。</div>
+	</div>
+	<div>
+		<img src="/img/wx.jpg" style="height: 100px;">
+	</div>
+</div>
+</body>
+
+<script type="text/javascript" src="/js/jquery.min.js"></script>
+<script type="text/javascript" src="/layui/layui.all.js"></script>
+<script>
+	//初次部署时，用来判断数据库是否链接成功
+	//正式使用时，可以去掉此段
+	var database_error = `<%=database_error%>`;
+	if(database_error){
+		alert('数据库链接出现异常：'+JSON.stringify(database_error));
+	}
+
+	//翻页加载作品
+	var laypage = layui.laypage ,layer = layui.layer;
+	laypage.render({
+	elem: 'layui_change_page'
+	,count: <%= project_count %>
+	,limit:8
+	,theme: '#FB0'
+	,jump: function(obj, first){
+		$.ajax({
+			'url': '/index/getProjects',
+			'type': 'POST',
+			'data': {curr:obj.curr, limit:obj.limit},
+			'success': function(d) {
+				if (d.length){
+					$("#box_projects").html("");
+					for (var i=0; i<d.length; i++){
+						if (d[i].state==2){
+							openSrc=".开源";
+						}else{
+							openSrc='';
+						}
+						$("#box_projects").append(`
+							<div class="layui-col-md3 layui-col-sm4 layui-col-xs6" style="padding:10px;">
+								<a href="/scratch/play?id=${d[i].id}" target="_blank"><img class="img-slt" src="/scratch_slt/${d[i].id}"></a>
+								<div class="txt-project-title">${d[i].title}${openSrc}</div>
+							</div>						
+						`);
+					}
+				} else {
+					//layer.msg("无满足条件的作品");
+				}
+			}
+		});
+		}
+	});
+</script>
+<script>
+	//搜索加载作品
+	$('#search_txt').keydown(function(e){
+	  if(e.keyCode==13){Search();}
+	});
+
+	function Search(){
+	  var txt = $("#search_txt").val();
+	  if (txt==''){$("#search_txt").focus();return}
+	
+	  $.ajax({
+			'url': '/index/seachProjects',
+			'type': 'POST',
+			'data': {'txt':txt},
+			'success': function(d) {
+				if (d.length){
+					$("#box_projects").html("");
+					for (var i=0; i<d.length; i++){
+						$("#box_projects").append(`
+							<div class="layui-col-md3 layui-col-sm4 layui-col-xs6" style="padding:10px;">
+								<a href="/scratch/play?id=${d[i].id}" target="_blank"><img class="img-slt" src="/scratch_slt/${d[i].id}"></a>
+								<div class="txt-project-title">${d[i].title}</div>
+							</div>						
+						`);
+					}
+				} else {
+					//layer.msg("无满足条件的作品");
+				}
+			}
+		});
+	}
+</script>
+</html>

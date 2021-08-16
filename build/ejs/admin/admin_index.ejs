@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>系统管理平台_必行编程</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <link rel="shortcut icon" href="/img/icon.ico">
+
+  <link rel="stylesheet" href="/layui/css/layui.css">
+</head>
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+  <!-- 头部区域 -->
+  <div class="layui-header" style="width: 100%;">
+    <div class="layui-logo">
+      <a href="/"><img src="/img/logo_w.png" style="width: 120px;margin:0 20px"></a>
+    </div>
+
+
+    <ul class="layui-nav layui-layout-left">
+      <li class="layui-nav-item"><a href="/admin" style="color:#F72;">系统管理平台</a></li>
+      <li class="layui-nav-item"><a href="javascript:;" onclick="sooncoming()">机构管理平台</a></li>
+      <li class="layui-nav-item"><a href="javascript:;" onclick="sooncoming()">校区管理平台</a></li>
+      <li class="layui-nav-item"><a href="javascript:;" onclick="sooncoming()">教师管理平台</a></li>
+      <li class="layui-nav-item"><a href="/my/project" target="_blank">学习中心</a></li>
+    </ul>
+
+    <ul class="layui-nav layui-layout-right">
+      <li class="layui-nav-item style="margin-right: 50px;">
+        <a href="javascript:;">
+          <img src="/user/<%= userid %>.png" class="layui-nav-img">
+          <%= nickname %>
+        </a>
+        <dl class="layui-nav-child">
+          <dd><a href="/user/logout">退出</a></dd>
+        </dl>
+      </li>
+    </ul>
+  </div>
+  <!-- 左侧导航区域 -->
+  <div class="layui-side layui-bg-black">
+    <div class="layui-side-scroll">
+      <ul class="layui-nav layui-nav-tree">
+
+  <li class="layui-nav-item">
+    <a href="/admin/info" class="tar"><i class="layui-icon layui-icon-home" style="margin-right: 8px;"></i>平台概况</a>
+  </li>
+  <li class="layui-nav-item">
+    <a href="/admin/user" class="tar"><i class="layui-icon layui-icon-user" style="margin-right: 8px;"></i>用户管理</a>
+  </li>
+  <li class="layui-nav-item">
+    <a href="/admin/works/scratch" class="tar"><i class="layui-icon layui-icon-list" style="margin-right: 8px;"></i>作品管理</a>
+  </li>
+
+  <!-- 后续开源？？？ -->
+  <li class="layui-nav-item">
+    <a href="javascript:;" onclick="sooncoming()"><i class="layui-icon layui-icon-chat" style="margin-right: 8px;"></i>素材管理</a>
+  </li>
+  <li class="layui-nav-item">
+    <a href="javascript:;" onclick="sooncoming()"><i class="layui-icon layui-icon-chat" style="margin-right: 8px;"></i>机构管理</a>
+  </li>
+  <li class="layui-nav-item">
+    <a href="javascript:;" onclick="sooncoming()"><i class="layui-icon layui-icon-chat" style="margin-right: 8px;"></i>校区管理</a>
+  </li>
+  <li class="layui-nav-item">
+    <a href="javascript:;" onclick="sooncoming()"><i class="layui-icon layui-icon-chat" style="margin-right: 8px;"></i>教师管理</a>
+  </li>
+  <li class="layui-nav-item">
+    <a href="javascript:;" onclick="sooncoming()"><i class="layui-icon layui-icon-chat" style="margin-right: 8px;"></i>课程管理</a>
+  </li>
+  
+      </ul>
+    </div>
+  </div>
+  <!-- 内容主体区域：默认为src -->
+  <div class="layui-body" style="bottom:0;padding:0;">
+      <iframe id="iframeMain" 
+        src="/admin/default"
+        width="100%";
+        style="height: calc(100% - 3px);";
+        
+        marginwidth="0";
+        marginheight="0";
+        scrolling="auto";
+        frameborder="0";
+      >
+    </iframe>
+  </div>
+</div>
+</body>
+
+<script src="/js/jquery.min.js"></script>
+<script src="/layui/layui.all.js"></script>
+<script src="/js/main.js"></script>
+<script>
+    $(document).ready(function () {
+      $("a.tar").click(function (e) {
+        e.preventDefault();//阻止A标签事件，直接使用下面的iframe
+        $("#iframeMain").attr("src", $(this).attr("href"));
+      });
+    });
+</script>
+</html>
+      

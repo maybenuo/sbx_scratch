@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>必行编程-普惠性少儿编程平台</title>
+  <link rel="shortcut icon" href="/img/icon.ico">
+  <meta name="description" content="Scratch、Python、C++教学，竞赛、等级考试。">
+  <meta name="keyword" content="Scratch,Python,C++,少儿编程,K12,必行编程,中小学生创客,STEAM,小学信息技术,机器人编程,图形化编程">
+  <link type="text/css" rel="stylesheet" href="/layui/css/layui.css"/>
+<style>
+  .footer-copyright p {
+    text-align: center;
+    font-size: 1rem;
+    text-transform: uppercase;
+    
+    margin-top: 80px;
+    padding: 20px 0;
+    background-color: #F8F8F8;
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="row">
+    <div class="col-md-8 col-md-offset-4 col-xs-8 col-xs-offset-2">
+      <% if (typeof(tip) != "undefined") {%>
+        <div style="display: flex;margin:150px 0 50px 0;">
+
+          <i class="layui-icon layui-icon-tips" style="font-size:24px;color: #F72;"></i>
+          <p style="font-size: large;"><%= tip.msg %>... 
+            <% if (tip.opt == "go") {%>
+            <a href="<%=tip.href%>" class="layui-btn layui-btn-sm layui-btn-primary">刷新</a>
+            <%}%>
+            <% if (tip.opt == "flash") {%>
+            <a href="javascript:location.reload()" class="layui-btn layui-btn-sm layui-btn-primary">刷新</a>
+            <%}%>
+            <% if (tip.opt == "close") {%>
+              <a href="javascript:window.close()" class="layui-btn layui-btn-sm layui-btn-primary">关闭本页</a>
+            <%}%>            
+          </p>
+        </div>
+      <% } else {%>
+        <i class="layui-icon layui-icon-404" style="font-size:404px;color: #444;"></i>
+        <p>无权访问 或 页面数据被运到火星了，啥都看不到了... 
+          <a href="/" class="layui-btn layui-btn-sm layui-btn-primary">返回首页 </a>
+        </p>
+      <%}%>
+    </div>
+  </div>
+</div>
+
+<footer id="footer">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12" style="padding: 0;">
+        <div class="footer-copyright"><p>©2020. LLC. All rights reserved."必行编程"</p></div>
+      </div>
+    </div>
+  </div>
+</footer>
+</body>
+
+<script type="text/javascript" src="/js/jquery.min.js"></script>
+<script type="text/javascript" src="/layui/layui.all.js"></script>
+</html>

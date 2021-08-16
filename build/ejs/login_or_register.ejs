@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<% if (login) { %>
+  <script>window.location.href='/';</script>
+<% } %>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>登录/注册-必行编程</title>
+  <link rel="shortcut icon" href="/img/icon.ico">
+  <meta name="description" content="Scratch、Python、C++教学，竞赛、等级考试。">
+  <meta name="keyword" content="Scratch,Python,C++,少儿编程,K12,必行编程,中小学生创客,STEAM,小学信息技术,机器人编程,图形化编程">
+
+  <link rel="stylesheet" href="/layui/css/layui.css">
+	<link rel="stylesheet" href="/css/main.css">
+</head>
+
+<body>
+  <div class="layui-container" style="margin-top: 100px">
+    <div class="layui-row">
+      <div class="layui-col-md6">
+        <img src="/img/web/login_left.jpg" width="100%" style="border-radius: 5px;">
+      </div>
+      <style>
+        .title:after {
+            content:"";
+            display:block;
+            height:4px;
+            width:40px;
+            background-color: #FF7722;
+            margin-top: 20px;
+        }
+      </style>
+        
+      <div class="layui-col-md6" style="padding: 30px 0 0 30px;">
+        <div id='login-page'>
+          <h2 class="title">必行编程 登录</h2>
+          
+          <div class="reply-form" style="height: max-content;">
+            <form>
+              <input style="margin: 20px 0; width: 280px;" class="layui-input" id='username' type="text" maxlength="16" placeholder="账号">
+              <input style="margin: 20px 0; width: 280px;" class="layui-input" id='password' type="password" maxlength="16" placeholder="密码">
+              <div style="display:flex; height: 50px;">
+                <a href="javascript:;" onclick="switchPage('reg-page')">注 册</a>
+                <a href="javascript:;" onclick="switchPage('getPW-page')" style="margin-left: 18px;">忘记密码</a>
+              </div>
+              <button type="button" onclick="login()" class="layui-btn layui-btn-danger" style="width: 120px;">登 录</button>
+            </form>
+            <div>
+            </div>
+          </div>
+        </div>
+
+        <div id='reg-page' style="display: none;">
+          <h2 class="title">必行编程 注册</h2>
+          <div class="reply-form" style="height: max-content;">
+            <form>
+              <input style="margin: 20px 0; width: 280px;" class="layui-input" id='reg_username' type="text" maxlength="16" placeholder="账号：数字+字母">
+              <input style="margin: 20px 0; width: 280px;" class="layui-input" id='reg_password' type="text" maxlength="16" placeholder="密码：数字+写字母+!@#$%^&*">
+              <div style="height: 50px;"></div>
+
+              <button type="button" onclick="register()" class="layui-btn layui-btn-danger" style="width: 120px; margin-right: 20px;">注 册</button>
+              <a href="javascript:;" onclick="switchPage('login-page')">去登录</a>
+            </form>
+            <div>
+            </div>
+          </div>
+        </div>
+
+        <div id='getPW-page' style="display: none;">
+          <h2 class="title">必行编程 找回密码</h2>
+          <div class="reply-form" style="height: max-content;">
+            <form>
+              <input  style="margin: 20px 0; width: 280px;" class="layui-input" id='getPW_username' type="text" maxlength="11" placeholder="手机号">
+              <div style="display: flex;margin: 20px 0; ">
+                <input style="width: 138px;" class="layui-input" id='yzm_input' type="text" maxlength="6" placeholder="短信验证码">
+                <button class="layui-btn" onclick="getYZM(this)" type="button" style="border-radius: 0;margin:0;padding: 0; width: 140px;">获取验证码</button>
+              </div>
+              
+              <div style="height: 50px;">
+                <input style="width: 280px;" class="layui-input" id='getPW_password' type="text" maxlength="16" placeholder="新密码">
+              </div>
+
+              <button type="button" onclick="getPW()" class="layui-btn layui-btn-danger" style="width: 120px; margin-right: 20px;">找回密码</button>
+              <a href="javascript:;" onclick="switchPage('login-page')">去登录</a>
+            </form>
+            <div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</body>
+
+<script type="text/javascript" src="/js/jquery.min.js"></script>
+<script type="text/javascript" src="/layui/layui.all.js"></script>
+<script type="text/javascript" src="/js/gter.js"></script>
+
+<script type="text/javascript" src="/js/main.js"></script>
+<script type="text/javascript" src="/js/login.js"></script>
+</html>

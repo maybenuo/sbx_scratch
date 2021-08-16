@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<title>我的作品-必行编程</title>
+	<link rel="shortcut icon" href="/img/icon.ico">
+	<meta name="description" content="Scratch、Python、C++教学，竞赛、等级考试。">
+	<meta name="keyword" content="Scratch,Python,C++,少儿编程,K12,必行编程,中小学生创客,STEAM,小学信息技术,机器人编程,图形化编程">
+
+	<link rel="stylesheet" type="text/css" href="/layui/css/layui.css">
+	<link type="text/css" rel="stylesheet" href="/css/main.css" />
+</head>
+
+<body style="background-color: #F8F8F8">
+	<div style="background-color: #FFF;">
+		<div id="head_box">
+			<a href="/" title="返回首页">
+				<img id="head_avatar" src="/user/<%=userid%>.png">
+			</a>
+			<div id="head_username"><%= nickname %></div>
+
+			<div id="head_menu">
+				<a href="javascript:;" onclick="project_state0()" style="margin: 0 12px;">未分享的作品</a>
+				<a href="javascript:;" onclick="project_state1()" style="margin: 0 12px;">已分享的作品</a>
+				<a href="javascript:;" onclick="project_state2()" style="margin: 0 12px;">已开源的作品</a>
+			</div>
+		</div>
+	</div>
+
+	<div class="layui-container">
+		<div class="layui-row" style="margin-top: 20px;" id="box_projects">
+		</div>
+
+		<div style="display:flex; justify-content:center;">
+			<div id="layui_change_page"></div>
+		</div>
+	</div>
+</body>
+<script type="text/javascript" src="/js/jquery.min.js"></script>
+<script type="text/javascript" src="/layui/layui.all.js"></script>
+<script type="text/javascript" src="/js/main.js"></script>
+<script>
+//翻页加载作品
+var _laypage = layui.laypage;
+function loadPage(count, state){
+	_laypage.render({
+	elem: 'layui_change_page'
+	,count: count
+	,limit:8
+	,theme: '#FB0'
+	,curr:1
+	,jump: function(obj, first){
+		$.ajax({
+			'url': '/my/getProjects',
+			'type': 'POST',
+			'data': {curr:obj.curr, limit:obj.limit,state:state},
+			'success': function(d) {
+				if (d.length){
+					$("#box_projects").html("");
+					if (state==0){
+						for (var i=0; i<d.length; i++){
+							$("#box_projects").append(`
+								<div class="layui-col-md3 layui-col-sm4 layui-col-xs6" style="padding:10px;">
+									<div class="txt-project-title1">
+										<div style="flex: 4;">${d[i].title}</div>
+										<div class="project-top-right" onclick="delProject(this,${d[i].id})">删除</div>
+									</div>
+									<a href="/scratch/edit?id=${d[i].id}" target="_blank"><img class="img-slt1" src="/scratch_slt/${d[i].id}"></a>
+									<div class="txt-project-title2">
+										<div class="project-bottom-left" onclick="shareScratchProject(${d[i].id})">分享</div>
+										<a class="project-bottom-right" href="/scratch/edit#${d[i].id}" target="_blank">修改</a>
+									</div>
+								</div>
+							`);
+						}				
+					} else {
+						for (var i=0; i<d.length; i++){
+							$("#box_projects").append(`
+								<div class="layui-col-md3 layui-col-sm4 layui-col-xs6" style="padding:10px;">
+									<div class="txt-project-title1">
+										<div style="flex: 4;">${d[i].title}</div>
+										<div class="project-top-right" onclick="delProject(this,${d[i].id})">删除</div>
+									</div>
+									<a href="/scratch/play?id=${d[i].id}" target="_blank"><img class="img-slt1" src="/scratch_slt/${d[i].id}"></a>
+									<div class="txt-project-title2">
+										<div class="project-bottom-left">浏览量：${d[i].view_count}</div>
+										<a class="project-bottom-right" href="/scratch/edit#${d[i].id}" target="_blank">修改</a>
+									</div>
+								</div>
+							`);
+						}				
+					}
+
+				} else {
+					$("#box_projects").append(`
+						<div class="layui-col-md12 layui-col-sm12 layui-col-xs12">
+							<div class="is_null"><a class="layui-btn layui-btn-warm" href="/scratch/edit" target="_blank">去创作一个作品吧</a></div>
+						</div>
+					`);
+					//layer.msg("无满足条件的作品");
+				}
+			}
+		});
+		}
+	});
+}
+
+	var state0_count = <%= state0_count %>;
+	var state1_count = <%= state1_count %>;
+	var state2_count = <%= state2_count %>;
+	//未分享的作品
+	function project_state0(){
+		$("#box_projects").html("");
+		loadPage(state0_count, 0);
+	}
+	//已分享的作品
+	function project_state1(){
+		$("#box_projects").html("");
+		loadPage(state1_count, 1);
+	}
+	//已开源的作品
+	function project_state2(){
+		$("#box_projects").html("");
+		loadPage(state2_count, 2);
+	}
+
+	//默认执行一次
+	project_state0();
+
+	//分享作品
+	function shareScratchProject(id){
+		layer.confirm('分享此作品？',{title:'重要提示',shadeClose:true}, function (index) {
+            AjaxFn('/my/scratch/share', {'id': id}, function (res){
+                layer.msg(res['msg']);
+                if ('success' == res['status']){
+					layer.close(index);
+					window.location.reload();
+                }
+            })
+        });
+	};
+	//删除作品
+	function delProject(that,id){
+		layer.confirm('删除此作品？',{title:'重要提示',shadeClose:true}, function (index) {
+            AjaxFn('/my/scratch/del', {'id': id}, function (res){
+                layer.msg(res['msg']);
+                if ('success' == res['status']){
+					$(that).parent().parent().html("");
+                    layer.close(index);
+                }
+            })
+        });
+	};
+</script>
+</html>

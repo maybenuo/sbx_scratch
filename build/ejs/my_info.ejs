@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>个人中心-必行编程</title>
+  <link rel="shortcut icon" href="/img/icon.ico">
+  <meta name="description" content="Scratch、Python、C++教学，竞赛、等级考试。">
+  <meta name="keyword" content="Scratch,Python,C++,少儿编程,K12,必行编程,中小学生创客,STEAM,小学信息技术,机器人编程,图形化编程">
+
+  <link rel="stylesheet" type="text/css" href="/layui/css/layui.css">
+  <link type="text/css" rel="stylesheet" href="/css/main.css" />
+</head>
+
+<body>
+	<div style="background-color: #FFF;">
+		<div id="head_box">
+		<a href="/" title="返回首页">
+			<img id="head_avatar" src="/user/<%=userid%>.png">
+		</a>
+		<div id="head_username"><%= nickname %></div>
+
+		<div id="head_menu">
+			<a href="javascript:;" onclick="sooncoming()" style="margin: 0 12px;">我的主页</a>
+			<a href="/my/info" style="margin: 0 12px;">个人信息</a>
+			<a href="javascript:;" onclick="openWindow_PW()" style="margin: 0 12px;">修改密码</a>
+			<a href='/user/logout' style="margin: 0 12px;">安全退出</a>
+		</div>
+		</div>
+	</div>
+
+	<div id="content_box">
+		<div style="background-color: #FFF; width: 960px;border-radius: 10px;">
+			<img src="/user/<%= userid %>.png" style="height: 100px; width: 100px;margin:20px;border-radius: 5px;">
+			<div>
+				<button type="button" class="layui-btn avatarUpload" lay-data="{exts:'png|jpg', size:100}">更换头像</button>
+			</div>
+			<div style="font-size: smaller;color:#999">
+				(头像文件格式：png、jpg 最佳像素：200x200；最大：100KB)
+			</div>
+
+			<div class="content-item">
+				账号：
+				<input id="old_username" class="layui-input" style="width: 240px;" disabled type="text" value="<%= username %>"/>
+				<div class="layui-btn" style="margin:0 2px 0 20px;" onclick="openWindow_UN()">升级账号</div>
+				<div style="font-size: smaller;">(升级为手机号，忘记密码时，才能找回密码)</div>
+			</div>
+
+
+			<div style="margin:30px; border: 1px dotted #888; width: 900px;">
+					<div class="content-item">
+						昵称：
+						<input style="width: 240px;" type="text" id="my_nickname" class="layui-input" maxlength="16" value="<%= nickname %>" />
+					</div>	
+
+					<div class="content-item">
+						性别：
+						<label>
+							<input type="radio" name="1" id="usermale" class="a-radio" value='1'
+								<% if (sex==1) { %>checked='checked' <% } %>>
+							<span class="b-radio"></span>男
+						</label>
+						<label style="margin-left: 18px;">
+							<input type="radio" name="1" id="userfemale" class="a-radio" value='0'
+								<% if (sex==0) { %>checked='checked' <% } %>>
+							<span class="b-radio"></span>女
+						</label>
+					</div>
+
+					<div class="content-item">
+						生日：
+						<select class="sel_year" id="sel_year" rel="<%= new Date(birth).getFullYear() %>"></select>年
+						<select style="margin-left: 18px;" class="sel_month" id="sel_month" rel="<%= new Date(birth).getMonth()+1 %>"></select>月
+						<select style="margin-left: 18px;" class="sel_day" id="sel_day" rel="<%= new Date(birth).getDate() %>"></select>日
+					</div>
+
+					<div class="content-item" style="width: 840px;">
+						<textarea class="layui-textarea" rows="8" placeholder="快来介绍一下自己（最多255个字）" maxlength="255" id="my_aboutme"><%= motto %></textarea>
+					</div>
+
+					<button type="button" class="layui-btn layui-btn-danger layui-btn-lg" onclick="updataInfo()" style="margin-bottom: 20px;">确认修改</button>
+			</div>
+		</div>
+	</div>
+
+<script type="text/javascript" src="/js/jquery.min.js"></script>
+<script type="text/javascript" src="/layui/layui.all.js"></script>
+<script type="text/javascript" src="/js/birthday.js"></script>
+<script type="text/javascript" src="/js/gter.js"></script>
+
+<script type="text/javascript" src="/js/main.js"></script>
+<script>
+//关联生日选择器
+$(function () {
+	$.ms_DatePicker({
+		YearSelector: ".sel_year",
+		MonthSelector: ".sel_month",
+		DaySelector: ".sel_day"
+	});
+	$.ms_DatePicker();
+});
+</script>
+</body>
+</html>

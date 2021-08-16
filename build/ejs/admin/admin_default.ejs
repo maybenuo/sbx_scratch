@@ -1,0 +1,63 @@
+<!-- 各管理平台的欢迎页面 -->
+<link rel="stylesheet" href="/layui/css/layui.css">
+<link rel="stylesheet" href="/css/main.css">
+<style>
+#top_box{
+	position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+}
+#top_bg {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+	bottom: 0;
+	
+    z-index: -10;
+    background-position: center;
+    background-size: cover;
+	background-attachment: fixed;
+	background-image: url(/img/web/sybj.jpg);
+}
+#top_overlay {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+	z-index: -9;
+    opacity: .68;
+	background: #333333;
+}
+</style>
+
+<div id="top_box">
+	<div id="top_bg"></div>
+	<div id="top_overlay"></div>
+		
+	<div id='header-box'>
+		<a href="https://www.comecode.net" target="_blank">
+			<img id="avatar_img" src="/img/logo.png" >
+		</a>
+		<a href="https://www.comecode.net" target="_blank">
+			<h3 style="color:#FFF;font-size:x-large;margin:20px 0 40px 0">必行编程---孩子们的编程平台</h3>
+		</a>
+
+		<div style="color:#FFF;margin:15px 0;">欢迎使用 scratch-cn.lite 开源平台</div>
+		<div style="color:#FFF;margin:15px 0;">技术交流QQ群：115224892</div>
+		<a href="https://www.comecode.net" target="_blank">
+			<div style="color:#F72;margin:15px 0;">功能参考：https://www.comecode.net</div>
+		</a>
+		<img id="avatar_img" src="/img/wx.jpg" style="margin-top: 10px;">
+		<a href="https://www.comecode.net/company/joinus" target="_blank">
+			<div style="color:#F72;margin:15px 0;">源代码有偿服务指南</div>
+		</a>
+		<div style="color:#F00;">©2020. LLC. All rights reserved.版权所有。开源版本仅用于学习交流，如需商用，请联系所有者。</div>
+	</div>
+</div>
+
+<script type="text/javascript" src="/js/jquery.min.js"></script>
+<script type="text/javascript" src="/layui/layui.all.js"></script>

@@ -34,7 +34,7 @@ app.use('/', express.static('build'));
 app.use('/', express.static('data'));//用户数据内容
 
 //启动http(80端口)==================================
-http.createServer(app).listen(80, '127.0.0.1', function () { console.log('HTTP APP started on port 80'); });
+http.createServer(app).listen(80, '0.0.0.0', function () { console.log('HTTP APP started on port 80'); });
 
 //平台总入口
 app.all('*', function (req, res, next) {

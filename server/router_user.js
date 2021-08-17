@@ -42,10 +42,11 @@ router.post('/login', function (req, res) {
             req.session['userid'] = User['id'];
             req.session['username'] = User['username'];
             req.session['nickname'] = User['nickname'];
+            req.session['authLevel'] = User['auth_level'];
             //console.log('已登录：**********************************');
 
-            //判断系统管理员权限
-            if (req.session['username']=='comecode'){
+            //判断系统管理员权限 0 管理员；1 普通用户；
+            if (req.session['authLevel']=='0'){
                 req.session['is_admin'] = 1;
             } else {
                 req.session['is_admin'] = 0;

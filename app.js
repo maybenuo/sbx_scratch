@@ -34,7 +34,7 @@ app.use('/', express.static('build'));
 app.use('/', express.static('data'));//用户数据内容
 
 //启动http(80端口)==================================
-http.createServer(app).listen(80, '127.0.0.1', function () { console.log('HTTP APP started on port 80'); });
+http.createServer(app).listen(80, '0.0.0.0', function () { console.log('HTTP APP started on port 80'); });
 
 //平台总入口
 app.all('*', function (req, res, next) {
@@ -43,9 +43,10 @@ app.all('*', function (req, res, next) {
         req.session['userid'] = req.signedCookies['userid'];
         req.session['username'] = req.signedCookies['username'];
         req.session['nickname'] = req.signedCookies['nickname'];
+        req.session['authLevel'] = req.signedCookies['auth_level'];
 
         //判断系统管理员权限：此处写死，无需从数据库获取
-        if (req.session['username']== 'comecode'){
+        if (req.session['authLevel']=='0'){
             req.session['is_admin'] = 1;
         } else {
             req.session['is_admin'] = 0;

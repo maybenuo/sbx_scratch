@@ -76,14 +76,9 @@
 <div style="display: flex;justify-content: center;background-color: #333;opacity: 0.8;">
 	<div style="margin:10px auto;line-height: 24px;color:#888; text-align: center;">
 		<div>欢迎使用 scratch-cn.lite 开源平台</div>
-		<div>技术交流QQ群：115224892</div>
-		<a href="https://www.comecode.net" target="_blank" style="color:#F72">
-			<div>功能参考：www.comecode.net</div>
-		</a>
-		<a href="https://www.comecode.net/company/joinus" target="_blank" style="color:#F72">
-			<div>源代码有偿服务指南</div>
-		</a>
-		<div>©2020. LLC. All rights reserved.版权所有。开源版本仅用于学习交流，如需商用，请联系所有者。</div>
+		<div>咨询热线：182-2759-2919</div>
+		<div>机构地址：成都市大邑县南苑八巷17号（可地图导航“数必行教育”）</div>
+		<div>©2021. LLC. All rights reserved.版权所有</div>
 	</div>
 	<div>
 		<img src="/img/wx.jpg" style="height: 100px;">
@@ -145,7 +140,10 @@
 
 	function Search(){
 	  var txt = $("#search_txt").val();
-	  if (txt==''){$("#search_txt").focus();return}
+	  if (txt==''){
+		  $("#search_txt").focus();
+		  return
+	  }
 	
 	  $.ajax({
 			'url': '/index/seachProjects',
@@ -163,7 +161,7 @@
 						`);
 					}
 				} else {
-					//layer.msg("无满足条件的作品");
+					layer.msg("无满足条件的作品");
 				}
 			}
 		});
